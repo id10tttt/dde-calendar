@@ -83,6 +83,10 @@ private:
     QAction *m_satAction;
     QAction *m_sunAction;
 
+    // 开启或者关闭 lunar
+    QAction *m_manual_enable_Lunar;
+    QAction *m_manual_disable_Lunar;
+
     QSettings *m_settings;
     QSettings *m_dateSettings;
 };

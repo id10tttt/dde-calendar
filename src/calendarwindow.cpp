@@ -59,7 +59,7 @@ CalendarWindow::CalendarWindow() :
     initUI();
     initAnimation();
     initDateChangeMonitor();
-    initLunar();
+//    initLunar();
 
     setWindowTitle(tr("Deepin Calendar"));
 
@@ -227,7 +227,15 @@ void CalendarWindow::setupMenu()
         titlebar->setSeparatorVisible(true);
 
         QMenu *firstWeekday = titlebar->menu()->addMenu(tr("First Day of Week"));
+
+        // 添加菜单
+        QMenu *manual_enable_Lunar = titlebar->menu()->addMenu(tr("Set Lunar"));
+
         QLocale locale;
+
+        // 添加 action
+        m_manual_enable_Lunar = manual_enable_Lunar->addAction("On");
+        m_manual_disable_Lunar = manual_enable_Lunar->addAction("Off");
 
         m_monAction = firstWeekday->addAction(locale.dayName(1, QLocale::ShortFormat));
         m_tueAction = firstWeekday->addAction(locale.dayName(2, QLocale::ShortFormat));
@@ -244,6 +252,18 @@ void CalendarWindow::setupMenu()
 
 void CalendarWindow::menuItemInvoked(QAction *action)
 {
+
+    if(action == m_manual_enable_Lunar){
+        m_settings->setValue("EnableLunar", true);
+        m_calendarView->setLunarVisible(true);
+        return;
+    }
+
+    if(action == m_manual_disable_Lunar){
+        m_settings->setValue("EnableLunar", false);
+        m_calendarView->setLunarVisible(false);
+        return;
+    }
 
     if (action == m_monAction) {
         m_calendarView->setFirstWeekday(Monday);
